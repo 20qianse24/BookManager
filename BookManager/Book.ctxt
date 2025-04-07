@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Book
+comment0.text=\n\ Book\ support\ class\n\ Has\ attributes\ title,\ author\ number\ of\ likes,\ and\ cover\ image\n\n\ @author\ Serena.Q\n\ @version\ 07/04/25\n
+comment1.params=key\ nm\ auth\ hearts
+comment1.target=Book(int,\ java.lang.String,\ java.lang.String,\ int)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Book\n
+comment2.params=
+comment2.target=int\ getId()
+comment2.text=\n\ Get\ id\n
+comment3.params=
+comment3.target=java.lang.String\ getName()
+comment3.text=\n\ Get\ name\n
+comment4.params=
+comment4.target=java.lang.String\ getAuthor()
+comment4.text=\n\ Get\ author\n
+comment5.params=
+comment5.target=int\ getLikes()
+comment5.text=\n\ Get\ likes\n
+numComments=6

@@ -30,17 +30,17 @@ public class Book
         if( img == null) {
             this.image = DEFAULT_IMAGE; // add default img if user clicks cancel
         }else{
-            this.image = img;
+            this.image = img;       // else the user inputs an image
         }
     }
     
     /**
      * Constructor for objects of class book
-     * @param key, nm, auth, qty
+     * @param key, nm, auth, likes
      */
-    public Book(long key, String nm, String auth, int likes)
+    public Book(long key, String nm, String auth, int hearts)
     {
-        this(key, nm, auth, likes, DEFAULT_IMAGE);
+        this(key, nm, auth, hearts, DEFAULT_IMAGE);
     }
     
     /**

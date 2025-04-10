@@ -27,9 +27,9 @@ public class Book
         name = nm;
         author = auth;
         likes = hearts;
-        if( img == null) {
+        if (img == null) {
             this.image = DEFAULT_IMAGE; // add default img if user clicks cancel
-        }else{
+        } else {
             this.image = img;       // else the user inputs an image
         }
     }

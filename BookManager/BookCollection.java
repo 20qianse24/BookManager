@@ -1,7 +1,6 @@
 import ecs100.*;
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.Scanner;
 /**
  * Holds a collection of books in a hashmap
  * Allowes a user to add, delete, find, print all, edit likes from a menu
@@ -22,8 +21,7 @@ public class BookCollection
     private String newAuthor;
     private int newLikes;
     private String imgFileName;
-    
-    private Scanner scanner;
+
     private String searchBookName;
     
     /**
@@ -33,12 +31,11 @@ public class BookCollection
     {
         // initialise instance variables
         library = new HashMap<Long, Book>();     // Initialise hashmap
-        scanner = new Scanner(System.in); // initialise scanner
        
         // Creating inital books - L converts to long variable class
-        Book b1 = new Book(9780141441146L, "Jane Eyre", "Charlotte Bronte", 52);
-        Book b2 = new Book(9780141439518L, "Pride And Prejudice", "Jane Austen", 71);
-        Book b3 = new Book(9780141321080L, "Little Women", "Louisa May Alcott", 12);
+        Book b1 = new Book(9780141441146L, "Jane Eyre", "Charlotte Bronte", 52, "jane_eyre.jpg");
+        Book b2 = new Book(9780141439518L, "Pride And Prejudice", "Jane Austen", 71, "pride_and_prejudice.jpg");
+        Book b3 = new Book(9780141321080L, "Little Women", "Louisa May Alcott", 12, "little_women.jpg");
         
         // Add books to collection
         library.put(9780141441146L, b1);
@@ -48,6 +45,7 @@ public class BookCollection
     
     /**
      * Gets book details
+     * Need to revise later and seperate error catching loops into seperate methods
      */
     public void getBookInfo() {
         String capName = null;      // To store the capitalised name
@@ -73,7 +71,7 @@ public class BookCollection
             do {
                 newLikes = UI.askInt("Number of likes: ");
                 if (newLikes < 0) {
-                    UI.println("Invalid value. Please enter a positive nmber");
+                    UI.println("Invalid value. Please enter a positive number");
                 }
             } while (newLikes < 0);
             // Validate String inputs
@@ -81,8 +79,7 @@ public class BookCollection
                 // Convert string input to long
                 newName = UI.askString("Name of the book: ").trim();
                 newAuthor = UI.askString("Author's name: ").trim();
-                String imgFileName = UIFileChooser.open("Choose Image File: ");
-        
+                
                 if (newName.isEmpty() || newAuthor.isEmpty()) {
                     UI.println("\nCannot leave either null.");
                 }else {
@@ -110,12 +107,11 @@ public class BookCollection
     }
     
     /**
-     * Finds a book based on the ID
+     * Finds a book based on the ID, checks if the library contains the given ID as a key
      * @param id The ID to search for
      * @return true if the book exists, false otherwise
      */
     public boolean findExistingId(long id) {
-        // Check if the library contains the given ID as a key
         return library.containsKey(id);
     }
     
@@ -124,11 +120,14 @@ public class BookCollection
      * Sets the current book instance if found
      * @ return boolean false if not found
      */
-    public boolean findBook(String name) {
-        // Search for Book
-        for (long bookId : library.keySet()) {
-            if (library.get(name).getName().toLowerCase().equals(name.toLowerCase())) {
-                currBook = library.get(bookId);     // Store the instance found book
+    public boolean findBook(String name){
+        //Search for book through hashmap library
+        for (long bookId: this.library.keySet()){
+            if(this.library.get(bookId).getName().toLowerCase().trim().equals(name.toLowerCase().trim())){
+                this.currBook = this.library.get(bookId); //Set the current Book
+                UI.clearGraphics();
+                library.get(currBook.getId()).displayBook();
+                UI.drawString("Likes: " + currBook.getLikes(), 200, 450);    // Display likes underneath
                 return true;
             }
         }
@@ -136,10 +135,10 @@ public class BookCollection
     }
     
     /**
-     * Return found book
+     * Returns book found from title
      */
     public void returnBook() {
-        String searchTitle = UI.askString("Enter the title of the book to search: ").trim().toUpperCase();
+        String searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
         findBook(searchTitle);
         if (this.findBook(searchTitle)) {
             UI.println("\nBook found: ");
@@ -188,7 +187,13 @@ public class BookCollection
     } */
     
     /**
+     * Click a book to like it, add to the like count, redraw the cover
+     * Make 2-3 methods for this after setting up mouse listener
+     */
+    
+    /**
      * Menu to print and call appropriate methods
+     * Console based menu
      */
     public void menu() {
         // Print menu and force choice

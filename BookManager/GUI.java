@@ -6,6 +6,7 @@ import ecs100.*;
  * ??? delete
  * ??? click the book cover to like the book
  * ??? show the total number of likes
+ * ??? edit number of likes
  *
  * @author Serena.Q
  * @version 09/04/25
@@ -25,17 +26,10 @@ public class GUI
         collection = new BookCollection();
         UI.initialise();
         UI.addButton("Print All", collection::printAll);
-        UI.addButton("Display All", collection::displayAll);
+        //UI.addButton("Display All", collection::displayAll);
         UI.addButton("Add", collection::getBookInfo);
         UI.addButton("Find", collection::returnBook);
         UI.addButton("Quit", UI::quit);
-    }
-    
-    /**
-     * Displays all book with the covers
-     */
-    public void displayAll() {
-        
     }
     
     /**

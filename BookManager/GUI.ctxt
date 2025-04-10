@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=GUI
-comment0.text=\n\ GUI\ class\ for\ book\ manager\n\ Allows\ add,\ print,\ find\ books\ on\ GUI\n\ \n\ ???\ delete\n\ ???\ click\ the\ book\ cover\ to\ like\ the\ book\n\ ???\ show\ the\ total\ number\ of\ likes\n\n\ @author\ Serena.Q\n\ @version\ 09/04/25\n
+comment0.text=\n\ GUI\ class\ for\ book\ manager\n\ Allows\ add,\ print,\ find\ books\ on\ GUI\n\ \n\ ???\ delete\n\ ???\ click\ the\ book\ cover\ to\ like\ the\ book\n\ ???\ show\ the\ total\ number\ of\ likes\n\ ???\ edit\ number\ of\ likes\n\n\ @author\ Serena.Q\n\ @version\ 09/04/25\n
 comment1.params=
 comment1.target=GUI()
 comment1.text=\n\ Constructor\ for\ objects\ of\ class\ GraphicsPane\n

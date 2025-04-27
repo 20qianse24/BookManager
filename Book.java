@@ -84,6 +84,13 @@ public class Book
     public void addLike() {
         likes += 1;
     }
+    
+    /**
+     * Change number of likes on a book
+     */
+    public void changeLikes(int newLikes) {
+        likes = newLikes;
+    }
 
     /**
      * Get id

@@ -5,8 +5,6 @@ import java.util.HashMap;
  * Holds a collection of books in a hashmap
  * Allowes a user to add, delete, find, print all, edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
- * 
- * Delete and edit likes is unfinished**
  *
  * @author Serena.Q
  * @version 07/04/25
@@ -158,7 +156,7 @@ public class BookCollection
     /**
      * Finds and prints book found from title
      * QUESTION: Should I seperate the console and GUI panel printing methods into the GUI class?
-     * At the moment this is both printing to the console and the graphics pane
+     * At the moment this is both printing to the console AND the graphics pane
      */
     public void returnBook() {
         searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
@@ -174,17 +172,41 @@ public class BookCollection
             UI.println("Title: " + this.currBook.getName());
             UI.println("Author: " + this.currBook.getAuthor());
             UI.println("Likes: " + this.currBook.getLikes());
-        }else{
+        } else {
+            UI.println("\nBook not found!");
+        }
+    }
+    
+    /**
+     * Edit number of likes on a book
+     */
+    public void editLikes() {
+        searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
+        findBook(searchTitle);
+        if (this.findBook(searchTitle)) {
+            // Get new number of likes and verify
+            do {
+                newLikes = UI.askInt("Enter new number of likes: ");
+                if (newLikes < MIN_LIKES) {
+                    UI.println("Invalid value. Please enter a positive number");
+                } else if (newLikes == this.currBook.getLikes()) {
+                    UI.println("Edit likes means to change it to a new number knucklehead. Try again.");
+                }
+            } while (newLikes < MIN_LIKES || newLikes == this.currBook.getLikes());
+            
+            this.currBook.changeLikes(newLikes);
+            UI.println("Likes successfully updated!");
+        } else {
             UI.println("\nBook not found!");
         }
     }
     
     /**
      * Returns the searched book title
-     */
+     *
     public String getTitleSearched() {
         return this.searchTitle;
-    }
+    } */
     
     /**
      * Gets the current book instance
@@ -208,17 +230,33 @@ public class BookCollection
     }
     
     /**
-     * Delete a book
-     *
-    public void deleteBook() {
+     * Deletes a book a book from the library using title (value) to get the IBSN/key
+     */
+    public void deleteBook(String title) {
+        long bookIdToRemove = -1;   // Setting a default value so java stops giving me an error
+        for (long bookId : library.keySet()) {
+            if (library.get(bookId).getName().equalsIgnoreCase(title)) {
+                bookIdToRemove = bookId;    // Storing the found book id/key
+                break;
+            }
+        }
+        
+        library.remove(bookIdToRemove);     // Remove the book
+    }
+    
+    /**
+     * Gets book info and finds book before deleting from library
+     */
+    public void removeBook() {
         String searchTitle = UI.askString("Enter the title of the book to delete: ").trim().toUpperCase();
-        findBook(searchTitle);
+        findBook(searchTitle);  // Check if the book actually exists
         if (this.findBook(searchTitle)) {
-            // Delete book
+            deleteBook(searchTitle);
+            UI.println("\nBook deleted from library.");
         }else{
             UI.println("\nBook not found!");
         }
-    } */
+    }
     
     /**
      * Menu to print and call appropriate methods

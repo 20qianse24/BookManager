@@ -3,10 +3,12 @@ import ecs100.*;
  * GUI class for book manager
  * Allows add, print, find books on GUI
  * 
- * ??? delete
+ * done - delete
  * done - click the book cover to like the book
  * done - show the total number of likes
- * ??? edit number of likes
+ * done - edit number of likes
+ * 
+ * ??? add max and min value constants
  *
  * @author Serena.Q
  * @version 09/04/25
@@ -31,8 +33,9 @@ public class GUI
         //UI.addButton("Display All", collection::displayAll);
         UI.addButton("Add", collection::getBookInfo);
         UI.addButton("Find", collection::returnBook);
+        UI.addButton("Delete", collection::removeBook);
+        UI.addButton("Edit Likes", collection::editLikes);
         UI.addButton("Quit", UI::quit);
-        // UI.addButton("Delete", collection::deleteBook);
         
         UI.setMouseListener(this::likeBook);
     }

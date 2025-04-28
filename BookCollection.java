@@ -1,16 +1,14 @@
 import ecs100.*;
-import java.awt.Color;
 import java.util.HashMap;
 /**
- * Holds a collection of books in a hashmap
+ * Holds a collection of books in a hashmap.
  * Allowes a user to add, delete, find, print all, edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  *
  * @author Serena.Q
  * @version 07/04/25
  */
-public class BookCollection
-{
+public class BookCollection {
     // instance variables
     private HashMap<Long, Book> library;     // Declaring the hashmap library
     private int currBookId;     // Store the current id of the book being added
@@ -23,17 +21,17 @@ public class BookCollection
     private String imgFileName;
 
     private String searchTitle;
-    
+
     // Constants
     private final int MIN_LIKES = 0;
     private final int MIN_ID = 0;
-    
+
     // x and y coordinates of the string underneath the book
     private int textX = 200;
     private int textY = 450;
     
     /**
-     * Constructor for objects of class BooksCollection
+     * Constructor for objects of class BooksCollection.
      */
     public BookCollection()
     {
@@ -52,7 +50,7 @@ public class BookCollection
     }
     
     /**
-     * Gets book details, validates then adds to the library
+     * Gets book details, validates then adds to the library.
      * Need to revise later and seperate error catching loops into seperate methods
      */
     public void getBookInfo() {
@@ -108,27 +106,27 @@ public class BookCollection
     }
     
     /**
-     * Get string x coordinate
+     * Get string x coordinate.
      */
     public int getTextX() {
         return this.textX;
     }
     /**
-     * Get string y coordinate
+     * Get string y coordinate.
      */
     public int getTextY() {
         return this.textY;
     }
     
     /**
-     * Add a book to the collection
+     * Add a book to the collection.
      */
     public void addBook(long bookId, String name, String author, int likes, String img) {
         library.put(bookId, new Book(bookId, name, author, likes, img));
     }
     
     /**
-     * Finds a book based on the ID, checks if the library contains the given ID as a key
+     * Finds a book based on the ID, checks if the library contains the given ID as a key.
      * @param id the ID to search for
      * @return true if the book exists, false otherwise
      */
@@ -137,7 +135,7 @@ public class BookCollection
     }
     
     /**
-     * Check for an existing book using ISBN
+     * Check for an existing book using ISBN.
      * Sets the current book instance if found
      * @ return boolean false if not found
      * REMINDER: REPLACE TEXT COORDINATES WITH CONSTANTS RELATING TO BOOK COORDINATES
@@ -154,7 +152,7 @@ public class BookCollection
     }
     
     /**
-     * Finds and prints book found from title
+     * Finds and prints book found from title.
      * QUESTION: Should I seperate the console and GUI panel printing methods into the GUI class?
      * At the moment this is both printing to the console AND the graphics pane
      */
@@ -178,7 +176,7 @@ public class BookCollection
     }
     
     /**
-     * Edit number of likes on a book
+     * Edit number of likes on a book.
      */
     public void editLikes() {
         searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
@@ -202,21 +200,14 @@ public class BookCollection
     }
     
     /**
-     * Returns the searched book title
-     *
-    public String getTitleSearched() {
-        return this.searchTitle;
-    } */
-    
-    /**
-     * Gets the current book instance
+     * Gets the current book instance.
      */
     public Book getBook() {
         return this.currBook;
     }
-    
+
     /**
-     * Prints all books and their details
+     * Prints all books and their details.
      * Console based interaction
      */
     public void printAll() {
@@ -228,9 +219,9 @@ public class BookCollection
                         + library.get(bookId).getLikes() + " likes");
         }
     }
-    
+
     /**
-     * Deletes a book a book from the library using title (value) to get the IBSN/key
+     * Deletes a book a book from the library using title (value) to get the IBSN/key.
      */
     public void deleteBook(String title) {
         long bookIdToRemove = -1;   // Setting a default value so java stops giving me an error
@@ -245,7 +236,7 @@ public class BookCollection
     }
     
     /**
-     * Gets book info and finds book before deleting from library
+     * Gets book info and finds book before deleting from library.
      */
     public void removeBook() {
         String searchTitle = UI.askString("Enter the title of the book to delete: ").trim().toUpperCase();
@@ -259,7 +250,7 @@ public class BookCollection
     }
     
     /**
-     * Menu to print and call appropriate methods
+     * Menu to print and call appropriate methods.
      * Console based menu
      */
     public void menu() {
@@ -289,10 +280,11 @@ public class BookCollection
             }
         } while (!choice.equalsIgnoreCase("Q"));
     }
-        
+
     /**
-     * Main routine
+     * Main routine.
      * Console based
+     * @param args arguments are ignores
      */
     public static void main(String[] args) {
         new BookCollection().menu();

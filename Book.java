@@ -32,6 +32,11 @@ public class Book {
 
     /**
      * Constructor for objects of class Book.
+     * @param key
+     * @param nm
+     * @param auth
+     * @param hearts
+     * @param img
      */
     public Book(final long key, final String nm,
     final String auth, final int hearts, final String img) {
@@ -49,7 +54,10 @@ public class Book {
 
     /**
      * Constructor for objects of class book.
-     * @param key, nm, auth, hearts
+     * @param key
+     * @param nm
+     * @param auth
+     * @param hearts
      */
     public Book(final long key, final String nm,
     final String auth, final int hearts) {
@@ -66,7 +74,8 @@ public class Book {
     /**
      * Reports whether (x,y) is on the book cover.
      * @return boolean clicked on or not
-     * @param x, y
+     * @param x
+     * @param y
      */
     public boolean onCover(final double x, final double y) {
         if ((x >= locX) && (x <= locX + WIDTH)
@@ -88,8 +97,9 @@ public class Book {
 
     /**
      * Change number of likes on a book.
+     * @param newLikes
      */
-    public void changeLikes(int newLikes) {
+    public void changeLikes(final int newLikes) {
         likes = newLikes;
     }
 

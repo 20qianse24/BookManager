@@ -13,8 +13,7 @@ import ecs100.*;
  * @author Serena.Q
  * @version 09/04/25
  */
-public class GUI
-{
+public class GUI {
     // instance variables
     private BookCollection collection;
     private Book book;
@@ -29,7 +28,6 @@ public class GUI
         collection = new BookCollection();
         UI.initialise();
         UI.addButton("Print All", collection::printAll);
-        //UI.addButton("Display All", collection::displayAll);
         UI.addButton("Add", collection::getBookInfo);
         UI.addButton("Find", collection::returnBook);
         UI.addButton("Delete", collection::removeBook);
@@ -41,8 +39,11 @@ public class GUI
 
     /**
      * Manages the interaction with the cover image on the pane (edit likes).
+     * @param action
+     * @param x
+     * @param y
      */
-    public void likeBook(String action, double x, double y) {
+    public void likeBook(final String action, final double x, final double y) {
         if (action.equals("clicked")) {
             book = collection.getBook();    // Set the current book instance
             if (book == null) {     // User hasn't searched for a book yet
@@ -72,8 +73,9 @@ public class GUI
 
     /**
      * Main routine.
+     * @param args arguments is ignored
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new GUI();
     }
 }

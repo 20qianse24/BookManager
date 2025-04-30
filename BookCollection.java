@@ -2,7 +2,8 @@ import ecs100.*;
 import java.util.HashMap;
 /**
  * Holds a collection of books in a hashmap.
- * Allowes a user to add, delete, find, print all, edit likes from a menu and by clicking
+ * Allowes a user to add, delete, find, print all,
+ * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  *
  * @author Serena.Q
@@ -13,7 +14,7 @@ public class BookCollection {
     private HashMap<Long, Book> library;     // Declaring the hashmap library
     private int currBookId;     // Store the current id of the book being added
     private Book currBook;      // Store the instance of the current book
-    
+
     private long newBookId;
     private String newName;
     private String newAuthor;
@@ -29,46 +30,50 @@ public class BookCollection {
     // x and y coordinates of the string underneath the book
     private int textX = 200;
     private int textY = 450;
-    
+
     /**
      * Constructor for objects of class BooksCollection.
      */
-    public BookCollection()
-    {
+    public BookCollection() {
         // initialise instance variables
         library = new HashMap<Long, Book>();     // Initialise hashmap
-       
+
         // Creating inital books - L converts to long variable class
-        Book b1 = new Book(9780141441146L, "Jane Eyre", "Charlotte Bronte", 52, "jane_eyre.jpg");
-        Book b2 = new Book(9780141439518L, "Pride And Prejudice", "Jane Austen", 71, "pride_and_prejudice.jpg");
-        Book b3 = new Book(9780141321080L, "Little Women", "Louisa May Alcott", 12, "little_women.jpg");
-        
+        Book b1 = new Book(9780141441146L, "Jane Eyre",
+        "Charlotte Bronte", 52, "jane_eyre.jpg");
+        Book b2 = new Book(9780141439518L, "Pride And Prejudice",
+        "Jane Austen", 71, "pride_and_prejudice.jpg");
+        Book b3 = new Book(9780141321080L, "Little Women",
+        "Louisa May Alcott", 12, "little_women.jpg");
+
         // Add books to collection
         library.put(9780141441146L, b1);
         library.put(9780141439518L, b2);
         library.put(9780141321080L, b3);
     }
-    
+
     /**
      * Gets book details, validates then adds to the library.
-     * Need to revise later and seperate error catching loops into seperate methods
+     * Need to revise later & seperate error catching loops
+     * into seperate methods
      */
     public void getBookInfo() {
         String capName = null;      // To store the capitalised name
         String capAuthor = null;    // To store the capitalised Author name
 
         // Validate the input for newBookId
-        do { 
+        do {
             try {
-                newBookId = Long.decode(UI.askString("ISBN number: ").trim());;  // Convert to long
+                // Convert to long
+                newBookId = Long.decode(UI.askString("ISBN number: ").trim());
             } catch (NumberFormatException e) {
                 newBookId = 0;
             }
             if (newBookId <= MIN_ID) {
-               UI.println("Invalid ISBN number. Please enter a valid number."); 
+               UI.println("Invalid ISBN number. Please enter a valid number.");
             }
         } while (newBookId <= MIN_ID);
-        
+
         // Check for existing book using unique ISBN number
         if (this.findExistingId(newBookId)) {
             UI.println("Error: That book already exists!");
@@ -85,85 +90,102 @@ public class BookCollection {
                 // Convert string input to long
                 newName = UI.askString("Name of the book: ").trim();
                 newAuthor = UI.askString("Author's name: ").trim();
-                
+
                 if (newName.isEmpty() || newAuthor.isEmpty()) {
                     UI.println("\nCannot leave either null.");
-                }else {
+                } else {
                     // Setting the first letter to capital
-                    capName = newName.substring(0, 1).toUpperCase() + newName.substring(1);
+                    capName = newName.substring(0, 1).toUpperCase()
+                    + newName.substring(1);
                     newName = capName;
-                    capAuthor = newAuthor.substring(0, 1).toUpperCase() + newAuthor.substring(1);
+                    capAuthor = newAuthor.substring(0, 1).toUpperCase()
+                    + newAuthor.substring(1);
                     newAuthor = capAuthor;
                 }
-            } while (newName.isEmpty() || newAuthor.isEmpty());     // Repeat until no inputs are left empty
-            
+                // Repeat until no inputs are left empty
+            } while (newName.isEmpty() || newAuthor.isEmpty());
+
             // add books with images
-            String imgFileName = UIFileChooser.open("Choose Image File: ");
-            // add books with images
-            addBook(newBookId, newName, newAuthor, newLikes, imgFileName);       // Adding to the collection
+            imgFileName = UIFileChooser.open("Choose Image File: ");
+            // Adding to the collection
+            addBook(newBookId, newName, newAuthor, newLikes, imgFileName);
             UI.print("\nBook successfully added");
         }
     }
-    
+
     /**
      * Get string x coordinate.
+     * @return textX
      */
     public int getTextX() {
         return this.textX;
     }
     /**
      * Get string y coordinate.
+     * @return textY
      */
     public int getTextY() {
         return this.textY;
     }
-    
+
     /**
      * Add a book to the collection.
+     * @param bookId
+     * @param name
+     * @param author
+     * @param likes
+     * @param img
      */
-    public void addBook(long bookId, String name, String author, int likes, String img) {
+    public void addBook(final long bookId, final String name,
+    final String author, final int likes, final String img) {
         library.put(bookId, new Book(bookId, name, author, likes, img));
     }
-    
+
     /**
-     * Finds a book based on the ID, checks if the library contains the given ID as a key.
+     * Finds a book based on the ID.
+     * Checks if the library contains the given ID as a key
      * @param id the ID to search for
      * @return true if the book exists, false otherwise
      */
-    public boolean findExistingId(long id) {
+    public boolean findExistingId(final long id) {
         return library.containsKey(id);
     }
-    
+
     /**
      * Check for an existing book using ISBN.
      * Sets the current book instance if found
-     * @ return boolean false if not found
-     * REMINDER: REPLACE TEXT COORDINATES WITH CONSTANTS RELATING TO BOOK COORDINATES
+     * @param name
+     * @return boolean false if not found
+     *
+     * REMINDER: REPLACE TEXT COORDINATES WITH CONSTANTS
+     * RELATING TO BOOK COORDINATES
      */
-    public boolean findBook(String name){
+    public boolean findBook(final String name) {
         //Search for book through hashmap library
-        for (long bookId: this.library.keySet()){
-            if(this.library.get(bookId).getName().toLowerCase().trim().equals(name.toLowerCase().trim())){
+        for (long bookId: this.library.keySet()) {
+            if (this.library.get(bookId).getName().toLowerCase()
+            .trim().equals(name.toLowerCase().trim())) {
                 this.currBook = this.library.get(bookId); //Set the current Book
                 return true;
             }
         }
         return false;
     }
-    
+
     /**
      * Finds and prints book found from title.
-     * QUESTION: Should I seperate the console and GUI panel printing methods into the GUI class?
-     * At the moment this is both printing to the console AND the graphics pane
      */
     public void returnBook() {
-        searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
+        searchTitle = UI.askString("\nEnter the title of the book to search: ")
+        .trim().toUpperCase();
         findBook(searchTitle);
         if (this.findBook(searchTitle)) {
             UI.clearGraphics();
-            library.get(currBook.getId()).displayBook();    // Display the current book
-            UI.drawString("Likes: " + currBook.getLikes(), textX, textY);    // Display likes underneath
-            
+            // Display the current book
+            library.get(currBook.getId()).displayBook();
+            // Display likes underneath
+            UI.drawString("Likes: " + currBook.getLikes(), textX, textY);
+
             UI.println("\nBook found: ");
             // print current book instance's details
             UI.println("\nID: " + this.currBook.getId());
@@ -174,12 +196,13 @@ public class BookCollection {
             UI.println("\nBook not found!");
         }
     }
-    
+
     /**
      * Edit number of likes on a book.
      */
     public void editLikes() {
-        searchTitle = UI.askString("\nEnter the title of the book to search: ").trim().toUpperCase();
+        searchTitle = UI.askString("\nEnter the title of the book to search: ")
+        .trim().toUpperCase();
         findBook(searchTitle);
         if (this.findBook(searchTitle)) {
             // Get new number of likes and verify
@@ -188,19 +211,23 @@ public class BookCollection {
                 if (newLikes < MIN_LIKES) {
                     UI.println("Invalid value. Please enter a positive number");
                 } else if (newLikes == this.currBook.getLikes()) {
-                    UI.println("Edit likes means to change it to a new number knucklehead. Try again.");
+                    UI.println(
+                "Edit likes means to change it to a new number knucklehead.");
+                    UI.println("\nTry again.");
                 }
-            } while (newLikes < MIN_LIKES || newLikes == this.currBook.getLikes());
-            
+            } while (newLikes < MIN_LIKES
+            || newLikes == this.currBook.getLikes());
+
             this.currBook.changeLikes(newLikes);
             UI.println("Likes successfully updated!");
         } else {
             UI.println("\nBook not found!");
         }
     }
-    
+
     /**
      * Gets the current book instance.
+     * @return currBook
      */
     public Book getBook() {
         return this.currBook;
@@ -221,34 +248,39 @@ public class BookCollection {
     }
 
     /**
-     * Deletes a book a book from the library using title (value) to get the IBSN/key.
+     * Deletes a book a book from the library.
+     * using title (value) to get the IBSN/key
+     * @param title
      */
-    public void deleteBook(String title) {
-        long bookIdToRemove = -1;   // Setting a default value so java stops giving me an error
+    public void deleteBook(final String title) {
+        // Setting a default value so java stops giving me an error
+        long bookIdToRemove = -1;
         for (long bookId : library.keySet()) {
             if (library.get(bookId).getName().equalsIgnoreCase(title)) {
                 bookIdToRemove = bookId;    // Storing the found book id/key
                 break;
             }
         }
-        
+
         library.remove(bookIdToRemove);     // Remove the book
     }
-    
+
     /**
      * Gets book info and finds book before deleting from library.
      */
     public void removeBook() {
-        String searchTitle = UI.askString("Enter the title of the book to delete: ").trim().toUpperCase();
+        searchTitle = UI.askString(
+        "Enter the title of the book to delete: ")
+        .trim().toUpperCase();
         findBook(searchTitle);  // Check if the book actually exists
         if (this.findBook(searchTitle)) {
             deleteBook(searchTitle);
             UI.println("\nBook deleted from library.");
-        }else{
+        } else {
             UI.println("\nBook not found!");
         }
     }
-    
+
     /**
      * Menu to print and call appropriate methods.
      * Console based menu
@@ -261,10 +293,10 @@ public class BookCollection {
             UI.println("(F)ind a book");
             UI.println("(P)print all books");
             UI.println("(Q)uit");
-            
+
             // Avoid case-senstivity and whitespace before and after the string
             choice = UI.askString("Enter a choice: ").trim().toUpperCase();
-            
+
             if (choice.equalsIgnoreCase("A")) {
                 getBookInfo();
                 addBook(newBookId, newName, newAuthor, newLikes, imgFileName);
@@ -284,9 +316,9 @@ public class BookCollection {
     /**
      * Main routine.
      * Console based
-     * @param args arguments are ignores
+     * @param args arguments is ignored
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new BookCollection().menu();
     }
 }

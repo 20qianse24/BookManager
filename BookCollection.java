@@ -78,39 +78,59 @@ public class BookCollection {
         if (this.findExistingId(newBookId)) {
             UI.println("Error: That book already exists!");
             } else {    // Only proceed if the book does not exist yet
-            // Avoid negative likes
-            do {
-                newLikes = UI.askInt("Number of likes: ");
-                if (newLikes < MIN_LIKES) {
-                    UI.println("Invalid value. Please enter a positive number");
-                }
-            } while (newLikes < MIN_LIKES);
-            // Validate String inputs
-            do {
-                // Convert string input to long
-                newName = UI.askString("Name of the book: ").trim();
-                newAuthor = UI.askString("Author's name: ").trim();
+            // Ask for and validate likes
+            newLikes = validateLikes();
 
-                if (newName.isEmpty() || newAuthor.isEmpty()) {
-                    UI.println("\nCannot leave either null.");
-                } else {
-                    // Setting the first letter to capital
-                    capName = newName.substring(0, 1).toUpperCase()
-                    + newName.substring(1);
-                    newName = capName;
-                    capAuthor = newAuthor.substring(0, 1).toUpperCase()
-                    + newAuthor.substring(1);
-                    newAuthor = capAuthor;
-                }
-                // Repeat until no inputs are left empty
-            } while (newName.isEmpty() || newAuthor.isEmpty());
+            // Ask for and validate String inputs
+            newName = validateString("\nEnter Title: ");
+            newAuthor = validateString("\nEnter Author: ");
 
             // add books with images
             imgFileName = UIFileChooser.open("Choose Image File: ");
+
             // Adding to the collection
             addBook(newBookId, newName, newAuthor, newLikes, imgFileName);
             UI.print("\nBook successfully added");
         }
+    }
+
+    /**
+     * Ask for and validate number of likes.
+     * @return likes
+     */
+    public int validateLikes() {
+        int likes;
+        do {
+            likes = UI.askInt("Number of likes: ");
+            if (likes < MIN_LIKES) {
+                UI.println("Invalid value. Please enter a positive number");
+            }
+        } while (likes < MIN_LIKES);
+        return likes;
+    }
+
+    /**
+     * Ask for and validate a string input.
+     * @param prompt
+     * @return newString
+     */
+    public String validateString(final String prompt) {
+        String newString;
+        do {
+                // Convert string input to long
+                newString = UI.askString(prompt).trim();
+
+                if (newString.isEmpty()) {
+                    UI.println("\nCannot leave null.");
+                } else {
+                    // Setting the first letter to capital
+                    String capString = newString.substring(0, 1).toUpperCase()
+                    + newString.substring(1);
+                    newString = capString;
+                }
+                // Repeat until no input is left empty
+        } while (newString.isEmpty());
+        return newString;
     }
 
     /**
@@ -176,7 +196,8 @@ public class BookCollection {
      * Finds and prints book found from title.
      */
     public void returnBook() {
-        searchTitle = UI.askString("\nEnter the title of the book to search: ")
+        searchTitle = validateString(
+        "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
         findBook(searchTitle);
         if (this.findBook(searchTitle)) {
@@ -201,7 +222,8 @@ public class BookCollection {
      * Edit number of likes on a book.
      */
     public void editLikes() {
-        searchTitle = UI.askString("\nEnter the title of the book to search: ")
+        searchTitle = validateString(
+        "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
         findBook(searchTitle);
         if (this.findBook(searchTitle)) {
@@ -269,8 +291,8 @@ public class BookCollection {
      * Gets book info and finds book before deleting from library.
      */
     public void removeBook() {
-        searchTitle = UI.askString(
-        "Enter the title of the book to delete: ")
+        searchTitle = validateString(
+        "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
         findBook(searchTitle);  // Check if the book actually exists
         if (this.findBook(searchTitle)) {

@@ -259,6 +259,7 @@ public class BookCollection {
 
     /**
      * Prints all books and their details.
+     * Add if statement for when library is empty
      * Console based interaction
      */
     public void printAll() {
@@ -278,15 +279,14 @@ public class BookCollection {
      */
     public void deleteBook(final String title) {
         // Setting a default value so java stops giving me an error
-        long bookIdToRemove = -1;
+        /*long bookIdToRemove = -1;
         for (long bookId : library.keySet()) {
             if (library.get(bookId).getName().equalsIgnoreCase(title)) {
                 bookIdToRemove = bookId;    // Storing the found book id/key
                 break;
             }
-        }
-
-        library.remove(bookIdToRemove);     // Remove the book
+        }*/
+        //library.remove(this.currBook.getId());     // Remove the book
     }
 
     /**
@@ -298,7 +298,7 @@ public class BookCollection {
         .trim().toUpperCase();
         findBook(searchTitle);  // Check if the book actually exists
         if (this.findBook(searchTitle)) {
-            deleteBook(searchTitle);
+            library.remove(this.currBook.getId());     // Remove the book
             UI.println("\nBook deleted from library.");
         } else {
             UI.println("\nBook not found!");

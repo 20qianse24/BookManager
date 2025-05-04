@@ -5,6 +5,8 @@ import java.util.HashMap;
  * Allowes a user to add, delete, find, print all,
  * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
+ * 
+ * For internal, ask for author name as well to avoid duplicates
  *
  * @author Serena.Q
  * @version 07/04/25

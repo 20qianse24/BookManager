@@ -6,7 +6,10 @@ import java.util.HashMap;
  * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  * 
- * For internal, ask for author name as well to avoid duplicates
+ * Notes to self for internal:
+ * Create new function to ask for author name + title to avoid duplicates
+ * Call this function instead of asking again, and change findBook to use both author & title every time
+ * Use (for : ) to loop and check auth+title and return current book
  *
  * @author Serena.Q
  * @version 07/04/25
@@ -270,23 +273,6 @@ public class BookCollection {
                         + library.get(bookId).getAuthor() + " | "
                         + library.get(bookId).getLikes() + " likes");
         }
-    }
-
-    /**
-     * Deletes a book a book from the library.
-     * using title (value) to get the IBSN/key
-     * @param title
-     */
-    public void deleteBook(final String title) {
-        // Setting a default value so java stops giving me an error
-        /*long bookIdToRemove = -1;
-        for (long bookId : library.keySet()) {
-            if (library.get(bookId).getName().equalsIgnoreCase(title)) {
-                bookIdToRemove = bookId;    // Storing the found book id/key
-                break;
-            }
-        }*/
-        //library.remove(this.currBook.getId());     // Remove the book
     }
 
     /**

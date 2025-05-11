@@ -6,10 +6,7 @@ import java.util.HashMap;
  * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  * 
- * Notes to self for internal:
- * Create new function to ask for author name + title to avoid duplicates
- * Call this function instead of asking again, and change findBook to use both author & title every time
- * Use (for : ) to loop and check auth+title and return current book
+ * For internal, ask for author name as well to avoid duplicates
  *
  * @author Serena.Q
  * @version 07/04/25
@@ -31,6 +28,7 @@ public class BookCollection {
     // Constants
     private final int MIN_LIKES = 0;
     private final int MIN_ID = 0;
+    private final int MAX_LIKES =  2000000000;  // Int capacity rounded
 
     // x and y coordinates of the string underneath the book
     private int textX = 200;
@@ -109,6 +107,8 @@ public class BookCollection {
             likes = UI.askInt("Number of likes: ");
             if (likes < MIN_LIKES) {
                 UI.println("Invalid value. Please enter a positive number");
+            } else if (likes > MAX_LIKES) {
+                UI.println("Invalid value. Please enter a number under 2,000,000,000");
             }
         } while (likes < MIN_LIKES);
         return likes;
@@ -204,7 +204,6 @@ public class BookCollection {
         searchTitle = validateString(
         "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle);
         if (this.findBook(searchTitle)) {
             UI.clearGraphics();
             // Display the current book
@@ -230,7 +229,6 @@ public class BookCollection {
         searchTitle = validateString(
         "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle);
         if (this.findBook(searchTitle)) {
             // Get new number of likes and verify
             do {
@@ -282,7 +280,6 @@ public class BookCollection {
         searchTitle = validateString(
         "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle);  // Check if the book actually exists
         if (this.findBook(searchTitle)) {
             library.remove(this.currBook.getId());     // Remove the book
             UI.println("\nBook deleted from library.");

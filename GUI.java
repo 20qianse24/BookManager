@@ -1,3 +1,4 @@
+
 import ecs100.*;
 /**
  * GUI class for book manager.
@@ -62,7 +63,6 @@ public class GUI {
 
     /**
      * Erase the text already displayed on the pane.
-     * ERASE NOT WORKING PROPERLY RN - FIX
      */
     public void erase() {
         final int BUFFER = 1;

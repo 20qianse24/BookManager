@@ -6,7 +6,11 @@ import java.util.HashMap;
  * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  * 
- * For internal, ask for author name as well to avoid duplicates
+ * Notes to self for internal:
+ * Create new function to ask for author name + title to avoid duplicates
+ * Call this function instead of asking again, and change findBook to use both author & title every time
+ * Use (for : ) to loop and check auth+title and return current book
+ * Also create MIN and MAX contants for any integers + string lengths (note's bookmarked)
  *
  * @author Serena.Q
  * @version 07/04/25
@@ -24,11 +28,11 @@ public class BookCollection {
     private String imgFileName;
 
     private String searchTitle;
+    private String searchAuthor;
 
     // Constants
     private final int MIN_LIKES = 0;
     private final int MIN_ID = 0;
-    private final int MAX_LIKES =  2000000000;  // Int capacity rounded
 
     // x and y coordinates of the string underneath the book
     private int textX = 200;
@@ -107,8 +111,6 @@ public class BookCollection {
             likes = UI.askInt("Number of likes: ");
             if (likes < MIN_LIKES) {
                 UI.println("Invalid value. Please enter a positive number");
-            } else if (likes > MAX_LIKES) {
-                UI.println("Invalid value. Please enter a number under 2,000,000,000");
             }
         } while (likes < MIN_LIKES);
         return likes;
@@ -185,11 +187,13 @@ public class BookCollection {
      * REMINDER: REPLACE TEXT COORDINATES WITH CONSTANTS
      * RELATING TO BOOK COORDINATES
      */
-    public boolean findBook(final String name) {
+    public boolean findBook(final String name, final String author) {
         //Search for book through hashmap library
         for (long bookId: this.library.keySet()) {
             if (this.library.get(bookId).getName().toLowerCase()
-            .trim().equals(name.toLowerCase().trim())) {
+            .trim().equals(name.toLowerCase().trim())
+            && this.library.get(bookId).getAuthor().toLowerCase()
+            .trim().equals(author.toLowerCase().trim())) {    // or author name
                 this.currBook = this.library.get(bookId); //Set the current Book
                 return true;
             }
@@ -202,9 +206,12 @@ public class BookCollection {
      */
     public void returnBook() {
         searchTitle = validateString(
-        "\nEnter the title of the book to search: ")
+        "\nEnter the title of the book to search: ");
+        searchAuthor = validateString(
+        "\nEnter the author name to search: ")
         .trim().toUpperCase();
-        if (this.findBook(searchTitle)) {
+        findBook(searchTitle, searchAuthor);
+        if (this.findBook(searchTitle, searchAuthor)) {
             UI.clearGraphics();
             // Display the current book
             library.get(currBook.getId()).displayBook();
@@ -229,7 +236,11 @@ public class BookCollection {
         searchTitle = validateString(
         "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
-        if (this.findBook(searchTitle)) {
+        searchAuthor = validateString(
+        "\nEnter the author name to search: ")
+        .trim().toUpperCase();
+        findBook(searchTitle, searchAuthor);
+        if (this.findBook(searchTitle, searchAuthor)) {
             // Get new number of likes and verify
             do {
                 newLikes = UI.askInt("Enter new number of likes: ");
@@ -280,7 +291,11 @@ public class BookCollection {
         searchTitle = validateString(
         "\nEnter the title of the book to search: ")
         .trim().toUpperCase();
-        if (this.findBook(searchTitle)) {
+        searchAuthor = validateString(
+        "\nEnter the author name to search: ")
+        .trim().toUpperCase();
+        findBook(searchTitle, searchAuthor);  // Check if the book actually exists
+        if (this.findBook(searchTitle, searchAuthor)) {
             library.remove(this.currBook.getId());     // Remove the book
             UI.println("\nBook deleted from library.");
         } else {

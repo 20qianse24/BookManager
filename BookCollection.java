@@ -205,10 +205,14 @@ public class BookCollection {
      * Finds and prints book found from title.
      */
     public void returnBook() {
+        // Clear graphics and reset current book instance to stop likes from incrementing
+        UI.clearGraphics();
+        currBook = null;
+        
         searchTitle = validateString(
-        "\nEnter the title of the book to search: ");
+        "\nEnter the title of the book: ");
         searchAuthor = validateString(
-        "\nEnter the author name to search: ")
+        "\nEnter the author's name: ")
         .trim().toUpperCase();
         if (this.findBook(searchTitle, searchAuthor)) {
             UI.clearGraphics();
@@ -232,11 +236,15 @@ public class BookCollection {
      * Edit number of likes on a book.
      */
     public void editLikes() {
+        // Clear graphics and reset current book instance to stop likes from incrementing
+        UI.clearGraphics();
+        currBook = null;
+        
         searchTitle = validateString(
-        "\nEnter the title of the book to search: ")
+        "\nEnter the title of the book: ")
         .trim().toUpperCase();
         searchAuthor = validateString(
-        "\nEnter the author name to search: ")
+        "\nEnter the author's name: ")
         .trim().toUpperCase();
         if (this.findBook(searchTitle, searchAuthor)) {
             // Get new number of likes and verify
@@ -246,7 +254,7 @@ public class BookCollection {
                     UI.println("Invalid value. Please enter a positive number");
                 } else if (newLikes == this.currBook.getLikes()) {
                     UI.println(
-                "Edit likes means to change it to a new number knucklehead.");
+                    "Edit likes means to change it to a new number knucklehead.");
                     UI.println("\nTry again.");
                 }
             } while (newLikes < MIN_LIKES
@@ -254,6 +262,10 @@ public class BookCollection {
 
             this.currBook.changeLikes(newLikes);
             UI.println("Likes successfully updated!");
+            // Display updated likes
+            UI.clearGraphics();
+            library.get(currBook.getId()).displayBook();
+            UI.drawString("Likes: " + currBook.getLikes(), textX, textY);
         } else {
             UI.println("\nBook not found!");
         }
@@ -274,11 +286,16 @@ public class BookCollection {
      */
     public void printAll() {
         // Traverse hashmap
-        for (long bookId : library.keySet()) {
-            UI.print("\nID: " + bookId + "\nDetails: ");
-            UI.println(library.get(bookId).getName() + " | "
-                        + library.get(bookId).getAuthor() + " | "
-                        + library.get(bookId).getLikes() + " likes");
+        if (library.isEmpty()) {
+            // if hashmap is empty print message
+            UI.println("There are currently no books in the library");
+        } else {
+            for (long bookId : library.keySet()) {
+                UI.print("\nID: " + bookId + "\nDetails: ");
+                UI.println(library.get(bookId).getName() + " | "
+                            + library.get(bookId).getAuthor() + " | "
+                            + library.get(bookId).getLikes() + " likes");
+            }
         }
     }
 
@@ -286,14 +303,20 @@ public class BookCollection {
      * Gets book info and finds book before deleting from library.
      */
     public void removeBook() {
+        // Clear graphics and reset current book instance to stop likes from incrementing
+        UI.clearGraphics();
+        currBook = null;
+        
         searchTitle = validateString(
-        "\nEnter the title of the book to search: ")
+        "\nEnter the title of the book: ")
         .trim().toUpperCase();
         searchAuthor = validateString(
-        "\nEnter the author name to search: ")
+        "\nEnter the author's name: ")
         .trim().toUpperCase();
         if (this.findBook(searchTitle, searchAuthor)) {
+            UI.clearGraphics();
             library.remove(this.currBook.getId());     // Remove the book
+            currBook = null;    // Reset current book after finding and deleting
             UI.println("\nBook deleted from library.");
         } else {
             UI.println("\nBook not found!");
@@ -302,7 +325,7 @@ public class BookCollection {
 
     /**
      * Menu to print and call appropriate methods.
-     * Console based menu
+     * Console based menu - unused right now
      */
     public void menu() {
         // Print menu and force choice

@@ -57,7 +57,7 @@ public class GUI {
                 + book.getLikes(), collection.getTextX(),
                 collection.getTextY());
                 UI.println("\nBook Liked");
-            }
+            } 
         }
     }
 

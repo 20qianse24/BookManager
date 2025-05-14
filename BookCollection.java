@@ -89,8 +89,8 @@ public class BookCollection {
             newLikes = validateLikes();
 
             // Ask for and validate String inputs
-            newName = validateString("\nEnter Title: ");
-            newAuthor = validateString("\nEnter Author: ");
+            newName = validateString("\nEnter Title: ").trim();
+            newAuthor = validateString("\nEnter Author: ").trim();
 
             // add books with images
             imgFileName = UIFileChooser.open("Choose Image File: ");
@@ -190,10 +190,10 @@ public class BookCollection {
     public boolean findBook(final String name, final String author) {
         //Search for book through hashmap library
         for (long bookId: this.library.keySet()) {
-            if (this.library.get(bookId).getName().toLowerCase()
-            .trim().equals(name.toLowerCase().trim())
-            && this.library.get(bookId).getAuthor().toLowerCase()
-            .trim().equals(author.toLowerCase().trim())) {    // or author name
+            if (this.library.get(bookId).getName().trim()
+            .equalsIgnoreCase(name.trim())
+            && this.library.get(bookId).getAuthor()
+            .trim().equalsIgnoreCase(author.trim())) {    // or author name
                 this.currBook = this.library.get(bookId); //Set the current Book
                 return true;
             }
@@ -210,10 +210,11 @@ public class BookCollection {
         currBook = null;
         
         searchTitle = validateString(
-        "\nEnter the title of the book: ");
+        "\nEnter the title of the book: ")
+        .trim();
         searchAuthor = validateString(
         "\nEnter the author's name: ")
-        .trim().toUpperCase();
+        .trim();
         if (this.findBook(searchTitle, searchAuthor)) {
             UI.clearGraphics();
             // Display the current book
@@ -242,10 +243,10 @@ public class BookCollection {
         
         searchTitle = validateString(
         "\nEnter the title of the book: ")
-        .trim().toUpperCase();
+        .trim();
         searchAuthor = validateString(
         "\nEnter the author's name: ")
-        .trim().toUpperCase();
+        .trim();
         if (this.findBook(searchTitle, searchAuthor)) {
             // Get new number of likes and verify
             do {
@@ -309,10 +310,10 @@ public class BookCollection {
         
         searchTitle = validateString(
         "\nEnter the title of the book: ")
-        .trim().toUpperCase();
+        .trim();
         searchAuthor = validateString(
         "\nEnter the author's name: ")
-        .trim().toUpperCase();
+        .trim();
         if (this.findBook(searchTitle, searchAuthor)) {
             UI.clearGraphics();
             library.remove(this.currBook.getId());     // Remove the book

@@ -181,7 +181,7 @@ public class BookCollection {
     /**
      * Check for an existing book using ISBN.
      * Sets the current book instance if found
-     * @param name
+     * @param name of the book
      * @return boolean false if not found
      *
      * REMINDER: REPLACE TEXT COORDINATES WITH CONSTANTS
@@ -210,7 +210,6 @@ public class BookCollection {
         searchAuthor = validateString(
         "\nEnter the author name to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle, searchAuthor);
         if (this.findBook(searchTitle, searchAuthor)) {
             UI.clearGraphics();
             // Display the current book
@@ -239,7 +238,6 @@ public class BookCollection {
         searchAuthor = validateString(
         "\nEnter the author name to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle, searchAuthor);
         if (this.findBook(searchTitle, searchAuthor)) {
             // Get new number of likes and verify
             do {
@@ -294,7 +292,6 @@ public class BookCollection {
         searchAuthor = validateString(
         "\nEnter the author name to search: ")
         .trim().toUpperCase();
-        findBook(searchTitle, searchAuthor);  // Check if the book actually exists
         if (this.findBook(searchTitle, searchAuthor)) {
             library.remove(this.currBook.getId());     // Remove the book
             UI.println("\nBook deleted from library.");

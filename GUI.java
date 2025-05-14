@@ -68,7 +68,7 @@ public class GUI {
         final int BUFFER = 1;
         // CHANGE TO CONSTANTS LATER
         UI.eraseRect(collection.getTextX(), collection.getTextY() - 10,
-        70 + BUFFER, 30 + BUFFER);
+        90 + BUFFER, 30 + BUFFER);
     }
 
     /**

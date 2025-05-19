@@ -6,9 +6,6 @@ import java.util.HashMap;
  * edit likes from a menu and by clicking
  * Prevents user from adding a duplicate by checking existing ISBN numbers
  * 
- * Notes to self for internal:
- * Create new function to ask for author name + title to avoid duplicates
- * Call this function instead of asking again, and change findBook to use both author & title every time
  * Use (for : ) to loop and check auth+title and return current book
  * Also create MIN and MAX contants for any integers + string lengths (note's bookmarked)
  *
@@ -61,12 +58,10 @@ public class BookCollection {
 
     /**
      * Gets book details, validates then adds to the library.
-     * Need to revise later & seperate error catching loops
-     * into seperate methods
      */
     public void getBookInfo() {
-        String capName = null;      // To store the capitalised name
-        String capAuthor = null;    // To store the capitalised Author name
+        // String capName = null;      // To store the capitalised name
+        // String capAuthor = null;    // To store the capitalised Author name
 
         // Validate the input for newBookId
         do {
@@ -125,7 +120,7 @@ public class BookCollection {
         String newString;
         do {
                 // Convert string input to long
-                newString = UI.askString(prompt).trim();
+                newString = UI.askString(prompt).trim().toLowerCase();
 
                 if (newString.isEmpty()) {
                     UI.println("\nCannot leave null.");
